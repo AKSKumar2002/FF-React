@@ -1,25 +1,27 @@
-import Navbar from "./components/Navbar";
-import HeroSection from "./components/HeroSection";
-import FeatureSection from "./components/FeatureSection";
-import Workflow from "./components/Workflow";
-import Footer from "./components/Footer";
-import Pricing from "./components/Pricing";
-import Testimonials from "./components/Testimonials";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/ScrollToTop";
 
-const App = () => {
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Plans from "./pages/Plans";
+import Contact from "./pages/Contact";
+import Complaints from "./pages/Complaints";
+import Reviews from "./pages/Reviews";
+
+export default function App() {
   return (
-    <>
-      <Navbar />
-      <div className="max-w-7xl mx-auto pt-20 px-6">
-        <HeroSection />
-        <FeatureSection />
-        <Workflow />
-        <Pricing />
-        <Testimonials />
-        <Footer />
-      </div>
-    </>
-  );
-};
+    <BrowserRouter>
+      <ScrollToTop />   {/* <-- IMPORTANT */}
 
-export default App;
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/plans" element={<Plans />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/complaints" element={<Complaints />} />
+        <Route path="/reviews" element={<Reviews />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
