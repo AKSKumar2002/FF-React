@@ -45,7 +45,7 @@ export default function Navbar() {
 
   // URLs for login
   const userLoginUrl = "https://user.fiberflow.co.in";
-  const partnerLoginUrl = "partner.fiberflow.co.in";
+  const partnerLoginUrl = "https://partner.fiberflow.co.in";
 
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 text-base transition-all duration-500 font-sans ${scrolled ? "bg-black/80 backdrop-blur-md" : "bg-transparent"}`}>
