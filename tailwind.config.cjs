@@ -4,11 +4,13 @@ module.exports = {
     extend: {
       colors: {
         darkBg: "#0a0a0a",
-        starBlue: "#00f0ff"
+        starBlue: "#00f0ff",
       },
       fontFamily: {
-        space: ['"Space Grotesk"', "sans-serif"]
-      },
+  sans: ['"Manrope"', "sans-serif"], // <- Make Manrope default for font-sans
+  space: ['"Space Grotesk"', "sans-serif"],
+},
+
       keyframes: {
         blob: {
           "0%, 100%": { transform: "translate(0px, 0px) scale(1)" },

@@ -1,37 +1,35 @@
 import React from "react";
-import bgVideo from "../assets/videos/wifi-bg.mp4"; // Make sure this exists
+import heroBg from "../assets/images/hero-img.jpeg"; // your full-screen background image
 
 export default function Hero() {
   return (
-    <section className="relative h-screen w-full overflow-hidden flex items-center justify-center text-center">
-      {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
-      >
-        <source src={bgVideo} type="video/mp4" />
-      </video>
+    <section
+      className="relative h-screen w-full bg-cover bg-center bg-no-repeat flex items-center"
+      style={{ backgroundImage: `url(${heroBg})` }}
+    >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black" />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-3xl mx-auto px-6">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-          Experience Lightning-Fast Internet with <span className="text-red-500">FiberFlow</span>
+      {/* Left Content */}
+      <div className="relative z-10 max-w-5xl px-6 md:px-40">
+        <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight text-white">
+          Experience Lightning-Fast Internet with{" "}
+          <span className="text-red-500">FiberFlow</span>
         </h1>
+
         <p className="text-lg md:text-xl text-gray-300 mb-8">
-          Stream, game, and work with unmatched speed and reliability. Stay connected to what matters most.
+          Stream, game, and work with unmatched speed and reliability.
+          Stay connected to what matters most.
         </p>
+
         <a
-          href="#plans"
-          className="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold hover:bg-gray-300 transition"
-        >
-          View Plans
-        </a>
+  href="/Plans"
+  className="bg-white text-black px-8 py-3 rounded-full text-lg font-semibold 
+  hover:bg-red-500 hover:text-white transition"
+>
+  View Plans
+</a>
+
       </div>
     </section>
   );

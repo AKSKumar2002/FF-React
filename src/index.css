@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 @layer base {
   html, body, #root {
     height: 100%;
   }
   body {
-    @apply bg-darkBg text-white antialiased;
+    @apply bg-darkBg text-white antialiased font-sans;
     font-family: 'Space Grotesk', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   }
 }

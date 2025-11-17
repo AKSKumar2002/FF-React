@@ -1,33 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { MapPin, Phone, Mail, Send } from "lucide-react";
 
 export default function Contact() {
+  const [selectedType, setSelectedType] = useState("Contact");
+  const types = ["Contact", "Complaint", "Review"];
+
   return (
-    <>
+    <div className="font-sans">
       <Navbar />
 
       {/* Page Header */}
-      <section className="relative bg-black text-white py-28 px-6">
-        <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold">Contact</h2>
-          <p className="text-gray-400 mt-3">
-            <a href="/" className="hover:text-red-500 transition">Home</a> 
-            <span className="mx-2">/</span> Contact
-          </p>
-        </div>
+      <section className="relative bg-black text-white py-20 px-6">
+        <div className="max-w-4xl mx-auto text-center"> {/* wider than 3xl */}
+  <h2 className="text-4xl md:text-6xl font-bold pt-20">Contact</h2>
+</div>
       </section>
 
       {/* Contact Section */}
-      <section className="bg-black text-white py-20 px-6">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <section className="bg-black text-white pt-5 pb-20 px-6">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12"> {/* wider than 4xl */}
 
           {/* LEFT SIDE CONTENT */}
           <div>
-            <p className="tracking-widest text-red-500 uppercase text-sm font-semibold">
-              Asked Questions
-            </p>
+            {/* LABEL BADGE */}
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-red-500/40 bg-red-500/5 text-red-400 shadow-[0_0_12px_rgba(255,0,0,0.25)] mb-5">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 12h4l2-7 4 14 2-7h6"
+              />
+            </svg>
+            <span className="text-sm font-medium">Asked Questions</span>
+          </div>
 
             <h2 className="text-3xl md:text-5xl font-bold mt-3 leading-tight">
               Talk with us for your <span className="text-red-500">broadband</span> need
@@ -56,7 +70,6 @@ export default function Contact() {
                 </div>
                 <div>
                   <span className="text-gray-400 text-sm">Phone</span>
-                  
                   <p className="text-xs text-gray-400 mt-1">Broadband Services</p>
                   <h3 className="text-lg font-semibold">
                     +91 99407 97720 <br /> +91 93603 97340
@@ -87,18 +100,35 @@ export default function Contact() {
 
           {/* RIGHT SIDE FORM */}
           <div className="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-md shadow-xl">
-            <h3 className="text-2xl font-bold">Send Us Message</h3>
-            <p className="text-gray-400 text-sm mt-1 mb-8">
-              Questions or you would just like to say hello — contact us.
+            <h3 className="text-2xl font-bold mb-4">Send Us Message</h3>
+            
+            {/* Selection Buttons */}
+            <div className="flex gap-3 mb-6">
+              {types.map((type) => (
+                <button
+                  key={type}
+                  onClick={() => setSelectedType(type)}
+                  className={`px-6 py-2 rounded-xl font-semibold transition ${
+                    selectedType === type
+                      ? "bg-red-600 text-white"
+                      : "bg-white/10 text-gray-300 hover:bg-white/20"
+                  }`}
+                >
+                  {type}
+                </button>
+              ))}
+            </div>
+
+            <p className="text-gray-400 text-sm mb-6">
+              You selected: <span className="text-red-500 font-semibold">{selectedType}</span>
             </p>
 
             <form className="space-y-6">
-              
               <div>
                 <label className="text-sm text-gray-300">Full Name</label>
                 <input
                   type="text"
-                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-pink-500"
+                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-red-500"
                   placeholder="Full Name"
                 />
               </div>
@@ -106,8 +136,8 @@ export default function Contact() {
               <div>
                 <label className="text-sm text-gray-300">Mobile</label>
                 <input
-                  type="number"
-                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-pink-500"
+                  type="text"
+                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-red-500"
                   placeholder="Mobile Number"
                 />
               </div>
@@ -116,7 +146,7 @@ export default function Contact() {
                 <label className="text-sm text-gray-300">Email</label>
                 <input
                   type="email"
-                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-pink-500"
+                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-red-500"
                   placeholder="support@gmail.com"
                 />
               </div>
@@ -125,7 +155,7 @@ export default function Contact() {
                 <label className="text-sm text-gray-300">Subject</label>
                 <input
                   type="text"
-                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-pink-500"
+                  className="w-full mt-1 px-4 py-3 rounded-lg bg-black/40 border border-white/10 text-white outline-none focus:border-red-500"
                   placeholder="I would like to discuss"
                 />
               </div>
@@ -145,7 +175,6 @@ export default function Contact() {
               >
                 Send Message <Send size={18} />
               </button>
-
             </form>
           </div>
 
@@ -153,6 +182,6 @@ export default function Contact() {
       </section>
 
       <Footer />
-    </>
+    </div>
   );
 }
