@@ -8,6 +8,15 @@ import Plans from "./pages/Plans";
 import Contact from "./pages/Contact";
 import Complaints from "./pages/Complaints";
 import Reviews from "./pages/Reviews";
+import IllPage from "./pages/IllPage";
+import P2PPage from "./pages/P2PPage";
+import ManagedNetworkPage from "./pages/ManagedNetworkPage";
+import BusinessBroadbandPage from "./pages/BusinessBroadbandPage";
+import SDWANPage from "./pages/SDWANPage";
+import VoicePage from "./pages/VoicePage";
+import WifiDesignPage from "./pages/WifiDesignPage";
+import FirewallPage from "./pages/FirewallPage";
+import FiberNetworkingPage from "./pages/FiberNetworkingPage";
 
 export default function App() {
   return (
@@ -33,6 +42,15 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/complaints" element={<Complaints />} />
         <Route path="/reviews" element={<Reviews />} />
+        <Route path="/services/ill" element={<IllPage />} />
+        <Route path="/services/p2p" element={<P2PPage />} />
+        <Route path="/services/managed-network" element={<ManagedNetworkPage />} />
+        <Route path="/services/business-broadband" element={<BusinessBroadbandPage />} />
+        <Route path="/services/sd-wan" element={<SDWANPage />} />
+        <Route path="/services/voice" element={<VoicePage />} />
+        <Route path="/services/wifi-design" element={<WifiDesignPage />} />
+        <Route path="/services/firewall" element={<FirewallPage />} />
+        <Route path="/services/fiber-networking" element={<FiberNetworkingPage />} />
       </Routes>
     </BrowserRouter>
   );
