@@ -4,6 +4,9 @@ import Hero from "../components/Hero";
 import Footer from "../components/Footer";
 import { Wifi, Zap, ShieldCheck, Globe, Users, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import welcomeImg from "../assets/images/welcome.jpg";
+import netImg from "../assets/images/net.jpg";
+import contactBg from "../assets/images/contact1.jpg"; // <-- add this import
 
 export default function Home() {
   return (
@@ -20,7 +23,7 @@ export default function Home() {
           {/* LEFT SIDE IMAGE */}
           <div className="w-full flex justify-center md:justify-start">
             <img
-              src="/src/assets/images/welcome.jpg"
+              src={welcomeImg}
               alt="FiberFlow Internet"
               className="rounded-xl shadow-lg object-cover"
               style={{ width: "500px", height: "550px" }}
@@ -215,7 +218,7 @@ export default function Home() {
           {/* RIGHT SIDE IMAGE */}
           <div className="w-full flex justify-center md:justify-end">
             <img
-              src="/src/assets/images/net.jpg"
+              src={netImg}
               alt="Coverage Area"
               className="rounded-xl shadow-lg object-cover border-none outline-none ring-0"
               style={{ width: "500px", height: "550px" }}
@@ -229,7 +232,7 @@ export default function Home() {
 <section
   className="relative py-24 scroll-mt-20 text-center px-6 bg-black"
   style={{
-    backgroundImage: "url('/src/assets/images/contact1.jpg')",
+    backgroundImage: `url(${contactBg})`, // <-- use imported image
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
