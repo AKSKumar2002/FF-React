@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
-export default function PlansPage() {
+export default function PlansPage({ city }) {
   const plans = [
     {
       title: "Standard Package",
@@ -115,6 +115,11 @@ export default function PlansPage() {
           </div>
             <h2 className="text-4xl md:text-6xl font-bold mt-3">
               Popular <span className="text-red-500">Plans</span>
+              {city && (
+                <span className="block text-lg text-gray-400 mt-2">
+                  for {city}
+                </span>
+              )}
             </h2>
           </div>
 

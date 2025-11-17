@@ -6,7 +6,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [loginDropdown, setLoginDropdown] = useState(false);
+  const [broadbandDropdown, setBroadbandDropdown] = useState(false);
+  const [servicesDropdown, setServicesDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const broadbandRef = useRef(null);
+  const servicesRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,6 +34,32 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [loginDropdown]);
 
+  // Close broadband dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (broadbandRef.current && !broadbandRef.current.contains(event.target)) {
+        setBroadbandDropdown(false);
+      }
+    }
+    if (broadbandDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [broadbandDropdown]);
+
+  // Close services dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (servicesRef.current && !servicesRef.current.contains(event.target)) {
+        setServicesDropdown(false);
+      }
+    }
+    if (servicesDropdown) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [servicesDropdown]);
+
   const goHome = () => {
     navigate("/");
     setTimeout(() => {
@@ -47,6 +77,34 @@ export default function Navbar() {
   const userLoginUrl = "https://user.fiberflow.co.in";
   const partnerLoginUrl = "https://partner.fiberflow.co.in";
 
+  // City list and URLs (replace with your actual URLs)
+  const broadbandCities = [
+    { name: "BroadBand in Othakkal Mandpam", url: "/plans/othakkalmandpam" },
+    { name: "BroadBand in Malumpichampatti", url: "/plans/malumpichampatti" },
+    { name: "BroadBand in Madukarai", url: "/plans/madukarai" },
+    { name: "BroadBand in Eachinari", url: "/plans/eachinari" },
+    { name: "BroadBand in Chettipalayam", url: "/plans/chettipalayam" },
+    { name: "BroadBand in Kinathkadavu", url: "/plans/kinathkadavu" },
+    { name: "BroadBand in Bodipalayam", url: "/plans/bodipalayam" },
+    { name: "BroadBand in Palaturai", url: "/plans/palaturai" },
+    { name: "BroadBand in Seerapalayam", url: "/plans/seerapalayam" },
+    { name: "BroadBand in Kurumbapalayam", url: "/plans/kurumbapalayam" },
+    { name: "BroadBand in Pollachi", url: "/plans/pollachi" },
+  ];
+
+  // Service list and URLs (replace with your actual URLs if needed)
+  const servicesList = [
+    { name: "Internet leased line / ILL", url: "/services/ill" },
+    { name: "Intranet / P2P", url: "/services/p2p" },
+    { name: "Managed Network Services", url: "/services/managed-network" },
+    { name: "Business Broadband", url: "/services/business-broadband" },
+    { name: "SD-WAN", url: "/services/sd-wan" },
+    { name: "Voice", url: "/services/voice" },
+    { name: "Wifi Design", url: "/services/wifi-design" },
+    { name: "Firewall", url: "/services/firewall" },
+    { name: "Fiber Networking", url: "/services/fiber-networking" },
+  ];
+
   return (
     <nav className={`fixed top-0 left-0 w-full z-50 text-base transition-all duration-500 font-sans ${scrolled ? "bg-black/80 backdrop-blur-md" : "bg-transparent"}`}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -61,8 +119,69 @@ export default function Navbar() {
         <ul className="hidden md:flex space-x-8 text-base font-semibold text-white font-sans">
           <li><NavLink to="/" className={linkClass}>Home</NavLink></li>
           <li><NavLink to="/about" className={linkClass}>About</NavLink></li>
-          <li><NavLink to="/plans" className={linkClass}>Plans</NavLink></li>
-          <li><NavLink to="/contact" className={linkClass}>Contact</NavLink></li>
+          {/* Broadband Dropdown */}
+          <li className="relative" ref={broadbandRef} style={{ pointerEvents: 'auto' }}>
+            <button
+              className="hover:text-red-500 transition flex items-center gap-1"
+              onClick={() => setBroadbandDropdown((prev) => !prev)}
+              type="button"
+            >
+              Broadband
+            </button>
+            {broadbandDropdown && (
+              <div
+                className="absolute left-0 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                style={{ pointerEvents: 'auto' }}
+                onMouseEnter={() => setBroadbandDropdown(true)}
+                onMouseLeave={() => setBroadbandDropdown(false)}
+              >
+                {broadbandCities.map((city, idx) => (
+                  <button
+                    key={city.url}
+                    className="block w-full text-left px-4 py-2 hover:bg-red-100/20 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                    onClick={() => {
+                      setBroadbandDropdown(false);
+                      window.location.href = city.url;
+                    }}
+                  >
+                    {city.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </li>
+          {/* Services Dropdown (replaces Plans) */}
+          <li className="relative" ref={servicesRef} style={{ pointerEvents: 'auto' }}>
+            <button
+              className="hover:text-red-500 transition flex items-center gap-1"
+              onClick={() => setServicesDropdown((prev) => !prev)}
+              type="button"
+            >
+              Services
+            </button>
+            {servicesDropdown && (
+              <div
+                className="absolute left-0 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                style={{ pointerEvents: 'auto' }}
+                onMouseEnter={() => setServicesDropdown(true)}
+                onMouseLeave={() => setServicesDropdown(false)}
+              >
+                {servicesList.map((service, idx) => (
+                  <button
+                    key={service.url}
+                    className="block w-full text-left px-4 py-2 hover:bg-red-100/20 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                    onClick={() => {
+                      setServicesDropdown(false);
+                      window.location.href = service.url;
+                    }}
+                  >
+                    {service.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </li>
+          <li><NavLink to="/contact" className={linkClass}>Contact us</NavLink></li>
           {/*<li><NavLink to="/complaints" className={linkClass}>Complaints</NavLink></li>
           <li><NavLink to="/reviews" className={linkClass}>Review</NavLink></li>*/}
         </ul>
@@ -124,7 +243,64 @@ export default function Navbar() {
         <div className="md:hidden bg-black/90 text-white px-6 py-4 space-y-4 text-center text-base font-sans">
           <NavLink to="/" className={linkClass} onClick={() => setIsOpen(false)}>Home</NavLink>
           <NavLink to="/about" className={linkClass} onClick={() => setIsOpen(false)}>About</NavLink>
-          <NavLink to="/plans" className={linkClass} onClick={() => setIsOpen(false)}>Plans</NavLink>
+          {/* Mobile Broadband Dropdown */}
+          <div className="relative">
+            <button
+              className="w-full text-left px-5 py-2 rounded-full font-semibold font-sans hover:bg-red-500 hover:text-white transition"
+              onClick={() => setBroadbandDropdown((prev) => !prev)}
+            >
+              Broadband
+            </button>
+            {broadbandDropdown && (
+              <div
+                className="absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                style={{ pointerEvents: 'auto' }}
+              >
+                {broadbandCities.map((city, idx) => (
+                  <button
+                    key={city.url}
+                    className="block w-full text-left px-4 py-2 hover:bg-red-100/20 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                    onClick={() => {
+                      setBroadbandDropdown(false);
+                      setIsOpen(false);
+                      window.location.href = city.url;
+                    }}
+                  >
+                    {city.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+          {/* Mobile Services Dropdown */}
+          <div className="relative">
+            <button
+              className="w-full text-left px-5 py-2 rounded-full font-semibold font-sans hover:bg-red-500 hover:text-white transition"
+              onClick={() => setServicesDropdown((prev) => !prev)}
+            >
+              Services
+            </button>
+            {servicesDropdown && (
+              <div
+                className="absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                style={{ pointerEvents: 'auto' }}
+              >
+                {servicesList.map((service, idx) => (
+                  <button
+                    key={service.url}
+                    className="block w-full text-left px-4 py-2 hover:bg-red-100/20 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                    onClick={() => {
+                      setServicesDropdown(false);
+                      setIsOpen(false);
+                      window.location.href = service.url;
+                    }}
+                  >
+                    {service.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <NavLink to="/contact" className={linkClass} onClick={() => setIsOpen(false)}>Contact</NavLink>
           <NavLink to="/complaints" className={linkClass} onClick={() => setIsOpen(false)}>Complaints</NavLink>
           <NavLink to="/reviews" className={linkClass} onClick={() => setIsOpen(false)}>Review</NavLink>
