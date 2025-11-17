@@ -1,42 +1,51 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
+// Helper to parse CSV (simple, for demo)
+function parseCSV(csv) {
+  const lines = csv.split("\n");
+  const headers = lines[0].split(",");
+  return lines.slice(1).map(line => {
+    const values = line.split(",");
+    let obj = {};
+    headers.forEach((h, i) => obj[h.trim()] = values[i]?.trim());
+    return obj;
+  });
+}
+
 export default function PlansPage({ city }) {
-  const plans = [
-    {
-      title: "Standard Package",
-      subtitle: "Fiber Internet",
-      speed: "20Mbps",
-      data: "300 GB",
-      price: "249",
-      icon: "flaticon-network-cable",
-    },
-    {
-      title: "Fast Package",
-      subtitle: "Fiber Internet",
-      speed: "100Mbps",
-      data: "1000 GB",
-      price: "599",
-      icon: "flaticon-smart-tv-1",
-    },
-    {
-      title: "Extremely Fast Package",
-      subtitle: "Home Internet",
-      speed: "300Mbps",
-      data: "3000 GB",
-      price: "1399",
-      icon: "flaticon-home",
-    },
-    {
-      title: "SME Plan",
-      subtitle: "Internet",
-      speed: "150Mbps",
-      data: "2500 GB",
-      price: "2600",
-      icon: "flaticon-internet-of-things",
-    },
-  ];
+  const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  // Use direct export format for Google Sheets CSV
+  const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQhj2ll_BGPHr2M5pYOeu0abMNxQ_5OzrNaxBd5pj-rfSKR2pKbxqhcTZ848HK1-LKNfCPy8WvNwpJX/pub?gid=0&single=true&output=csv";
+
+  useEffect(() => {
+    setLoading(true);
+    setError("");
+    fetch(sheetUrl)
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to fetch plans");
+        return res.text();
+      })
+      .then(csv => {
+        const allPlans = parseCSV(csv);
+        // Robust city filter
+        const cityPlans = allPlans.filter(plan =>
+          plan.city &&
+          city &&
+          plan.city.trim().toLowerCase() === city.trim().toLowerCase()
+        );
+        setPlans(cityPlans);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError("Unable to fetch plans. Please try again later.");
+        setLoading(false);
+      });
+  }, [city]);
 
   const ottLogos = [
     new URL("../assets/ott/1-hotstar.png", import.meta.url).href,
@@ -90,7 +99,6 @@ export default function PlansPage({ city }) {
   return (
     <>
       <Navbar />
-
       <section className="min-h-screen bg-black text-white pt-20 pb-20 px-4 md:px-6 font-sans">
         <div className="max-w-6xl mx-auto">
           {/* PAGE TITLE */}
@@ -124,55 +132,46 @@ export default function PlansPage({ city }) {
           </div>
 
           {/* PLANS GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16">
-            {plans.map((plan, i) => (
-              <div
-                key={i}
-                className="relative rounded-3xl p-10 bg-[#0d0d0dff] border border-red-500/20 
-                           shadow-[0_0_25px_rgba(255,0,0,0.15)] transition duration-300
-                           hover:shadow-[0_0_35px_rgba(255,0,0,0.25)]"
-              >
-                {i === 1 && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 
-                                  bg-red-600 text-white px-5 py-1 rounded-full text-sm shadow-lg">
-                    Popular
+          {loading ? (
+            <div className="text-center text-gray-400">Loading plans...</div>
+          ) : error ? (
+            <div className="text-center text-red-500">{error}</div>
+          ) : plans.length === 0 ? (
+            <div className="text-center text-gray-400">No plans found for this city.</div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-16">
+              {plans.map((plan, i) => (
+                <div
+                  key={i}
+                  className="relative rounded-3xl p-10 bg-[#0d0d0dff] border border-red-500/20 
+                             shadow-[0_0_25px_rgba(255,0,0,0.15)] transition duration-300
+                             hover:shadow-[0_0_35px_rgba(255,0,0,0.25)]"
+                >
+                  <span className="text-red-400 font-semibold text-l">{plan.title}</span>
+                  <p className="text-gray-300 text-sm mt-2">{plan.subtitle}</p>
+                  <div className="text-5xl font-bold text-white mt-6">
+                    ₹{plan.price}
+                    <span className="text-lg text-gray-400">/month</span>
                   </div>
-                )}
-
-                <span className="text-red-400 font-semibold text-l">{plan.title}</span>
-                <p className="text-gray-300 text-sm mt-2">{plan.subtitle}</p>
-
-                <div className="text-5xl font-bold text-white mt-6">
-                  ₹{plan.price}
-                  <span className="text-lg text-gray-400">/month</span>
+                  <ul className="mt-8 space-y-4 text-gray-300 text-sm">
+                    <li className="flex items-center gap-2">
+                      <span className="text-red-500 text-lg">✔</span>
+                      Internet Speed: <span className="text-white">{plan.speed}</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-red-500 text-lg">✔</span>
+                      Data Limit: {plan.data}
+                    </li>
+                    {/* ...add more fields as needed... */}
+                  </ul>
+                  <button className="mt-10 w-full py-3 rounded-full bg-red-600 hover:bg-red-700 
+                                     text-white font-semibold transition">
+                    Choose Package
+                  </button>
                 </div>
-
-                <ul className="mt-8 space-y-4 text-gray-300 text-sm">
-                  <li className="flex items-center gap-2">
-                    <span className="text-red-500 text-lg">✔</span>
-                    Internet Speed: <span className="text-white">{plan.speed}</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-red-500 text-lg">✔</span>
-                    Data Limit: {plan.data}
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-red-500 text-lg">✔</span>
-                    WiFi Router & Security
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="text-red-500 text-lg">✔</span>
-                    Unlimited Devices
-                  </li>
-                </ul>
-
-                <button className="mt-10 w-full py-3 rounded-full bg-red-600 hover:bg-red-700 
-                                   text-white font-semibold transition">
-                  Choose Package
-                </button>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
           {/* OTT LOGOS */}
           <div className="mt-24 text-center">
@@ -211,7 +210,6 @@ export default function PlansPage({ city }) {
           </div>
         </div>
       </section>
-
       <Footer />
     </>
   );
