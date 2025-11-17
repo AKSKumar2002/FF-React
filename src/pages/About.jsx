@@ -125,7 +125,7 @@ export default function About() {
         {/* Right Image */}
         <div>
           <img
-            src={bannerImage}
+            src="https://img.freepik.com/premium-photo/wireless-network-technology-with-wifi-sign-3d-rendering_772449-12666.jpg"
             alt="fiber network"
             className="rounded-3xl shadow-lg w-full h-[500px] object-cover"
           />
