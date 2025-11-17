@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import heroBg from "../assets/images/hero-img.jpeg";
+import heroVideo from "../assets/videos/hero-bg.mp4";
+import heroImg from "../assets/images/hero-img.jpeg"; // your image file
 
-export default function Hero() {
+export default function Hero({ useVideoBg = true }) {
   const [typedText, setTypedText] = useState("");
   const fullText = "FiberFlow";
-  const typingSpeed = 150; // milliseconds per character
-  const pauseDuration = 3000; // 3 seconds pause before restarting
+  const typingSpeed = 150;
+  const pauseDuration = 3000;
 
   useEffect(() => {
     let currentIndex = 0;
@@ -15,14 +16,12 @@ export default function Hero() {
     const startTyping = () => {
       currentIndex = 0;
       setTypedText("");
-      
       typingInterval = setInterval(() => {
         if (currentIndex <= fullText.length) {
           setTypedText(fullText.slice(0, currentIndex));
           currentIndex++;
         } else {
           clearInterval(typingInterval);
-          // Wait 3 seconds then restart
           pauseTimeout = setTimeout(() => {
             startTyping();
           }, pauseDuration);
@@ -39,12 +38,25 @@ export default function Hero() {
   }, []);
 
   return (
-    <section
-      className="relative h-screen w-full bg-cover bg-center bg-no-repeat flex items-center"
-      style={{ 
-        backgroundImage: `url(${heroBg})` 
-      }}
-    >
+    <section className="relative h-screen w-full bg-black flex items-center">
+      {/* Background: Video or Image */}
+      {useVideoBg ? (
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          src={heroVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+      ) : (
+        <img
+          className="absolute inset-0 w-full h-full object-cover"
+          src={heroImg}
+          alt="Hero Background"
+        />
+      )}
+
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
 
@@ -56,12 +68,10 @@ export default function Hero() {
             {typedText}
           </span>
         </h1>
-
         <p className="text-lg md:text-xl text-gray-300 mb-8">
           Stream, game, and work with unmatched speed and reliability.
           Stay connected to what matters most.
         </p>
-
         <a
           href="/Plans"
           className="inline-block bg-white text-black px-8 py-3 rounded-full text-lg font-semibold 
