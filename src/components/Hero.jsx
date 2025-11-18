@@ -58,7 +58,7 @@ export default function Hero({ useVideoBg = true }) {
       )}
 
       {/* Dark Overlay */}
-      <div className="absolute inset-0 glass-card"></div>
+      <div className="absolute inset-0 hero-overlay"></div>
 
       {/* Left Content */}
       <div className="relative z-10 max-w-5xl px-6 md:px-40">
