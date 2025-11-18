@@ -87,3 +87,25 @@ button {
   }
 }
 
+/* Hide scrollbars but keep scrolling usable (cross-browser) */
+html, body, #root {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Optional utility class to hide scrollbar on specific containers */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
