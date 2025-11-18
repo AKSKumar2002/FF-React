@@ -132,7 +132,7 @@ export default function Navbar() {
             </button>
             {broadbandDropdown && (
               <div
-                className="absolute left-0 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                className={`absolute left-0 mt-2 rounded-lg shadow-lg z-[9999] backdrop-blur-lg min-w-max w-auto py-1 ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}
                 style={{ pointerEvents: 'auto' }}
                 onMouseEnter={() => setBroadbandDropdown(true)}
                 onMouseLeave={() => setBroadbandDropdown(false)}
@@ -163,7 +163,7 @@ export default function Navbar() {
             </button>
             {servicesDropdown && (
               <div
-                className="absolute left-0 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                className={`absolute left-0 mt-2 rounded-lg shadow-lg z-[9999] backdrop-blur-lg min-w-max w-auto py-1 ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}
                 style={{ pointerEvents: 'auto' }}
                 onMouseEnter={() => setServicesDropdown(true)}
                 onMouseLeave={() => setServicesDropdown(false)}
@@ -184,8 +184,6 @@ export default function Navbar() {
             )}
           </li>
           <li><NavLink to="/contact" className={linkClass}>Contact us</NavLink></li>
-          {/*<li><NavLink to="/complaints" className={linkClass}>Complaints</NavLink></li>
-          <li><NavLink to="/reviews" className={linkClass}>Review</NavLink></li>*/}
         </ul>
 
         {/* CTA */}
@@ -197,8 +195,7 @@ export default function Navbar() {
             Login
           </button>
           {loginDropdown && (
-            <div className="absolute right-0 mt-2 w-48 rounded-lg shadow-lg z-50
-                            bg-white/10 backdrop-blur-lg border border-white/20">
+            <div className={`absolute right-0 mt-2 w-48 rounded-lg shadow-lg z-[9999] backdrop-blur-lg ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}>
               <button
                 className="block w-full text-left px-4 py-3 hover:bg-red-100/20 text-black font-medium border-b border-white/10"
                 style={{ color: "#fff" }}
@@ -264,7 +261,7 @@ export default function Navbar() {
             </button>
             {broadbandDropdown && (
               <div
-                className="absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                className={`absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-[9999] backdrop-blur-lg min-w-max w-auto py-1 ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}
                 style={{ pointerEvents: 'auto' }}
               >
                 {broadbandCities.map((city, idx) => (
@@ -293,7 +290,7 @@ export default function Navbar() {
             </button>
             {servicesDropdown && (
               <div
-                className="absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-50 bg-white/10 backdrop-blur-lg border border-white/20 min-w-max w-auto py-1"
+                className={`absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-[9999] backdrop-blur-lg min-w-max w-auto py-1 ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}
                 style={{ pointerEvents: 'auto' }}
               >
                 {servicesList.map((service, idx) => (
@@ -325,8 +322,7 @@ export default function Navbar() {
               Login
             </button>
             {loginDropdown && (
-              <div className="absolute left-1/2 -translate-x-1/2 mt-2 w-48 rounded-lg shadow-lg z-50
-                              bg-white/10 backdrop-blur-lg border border-white/20">
+              <div className={`absolute left-1/2 -translate-x-1/2 mt-2 w-48 rounded-lg shadow-lg z-[9999] backdrop-blur-lg ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}>
                 <button
                   className="block w-full text-left px-4 py-3 hover:bg-red-100/20 text-black font-medium border-b border-white/10"
                   style={{ color: "#fff" }}
