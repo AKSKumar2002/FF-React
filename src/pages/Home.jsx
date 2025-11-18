@@ -1,14 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
-import { Wifi, Zap, ShieldCheck, Globe, Users, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
+import { Wifi, Zap, ShieldCheck, Globe, Users } from "lucide-react";
 import welcomeImg from "../assets/images/welcome.jpg";
 import netImg from "../assets/images/net.jpg";
 import contactBg from "../assets/images/contact1.jpg"; // <-- add this import
 
 export default function Home() {
+  const location = useLocation();
+  const [showLoader, setShowLoader] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+
+    // Check if user explicitly forced the loader via nav (set by Navbar / Footer)
+    const forced = sessionStorage.getItem("ff_home_loader_force") === "true";
+
+    // Detect page refresh / reload using Performance Navigation API
+    const navEntries = (window.performance?.getEntriesByType?.("navigation") || []);
+    const navType = navEntries[0]?.type || null;
+    const isReload = navType === "reload";
+
+    // Check if loader was shown previously in the session
+    const shown = sessionStorage.getItem("ff_home_loader_shown") === "true";
+
+    // Show loader if forced, not previously shown, or this is a refresh
+    if (forced || !shown || isReload) {
+      // remove force flag so it doesn't persist
+      if (forced) sessionStorage.removeItem("ff_home_loader_force");
+
+      setShowLoader(true);
+      const t = setTimeout(() => {
+        setShowLoader(false);
+        sessionStorage.setItem("ff_home_loader_shown", "true");
+      }, 4000);
+      return () => clearTimeout(t);
+    }
+  }, [location]);
+
+  if (showLoader) {
+    return <Loader />;
+  }
+
   return (
     <div className="bg-black text-white font-sans">
       <Navbar />

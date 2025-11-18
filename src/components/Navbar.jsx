@@ -61,6 +61,8 @@ export default function Navbar() {
   }, [servicesDropdown]);
 
   const goHome = () => {
+    // force loader on next mount of Home
+    sessionStorage.setItem("ff_home_loader_force", "true");
     navigate("/");
     setTimeout(() => {
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -117,7 +119,7 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-8 text-base font-semibold text-white font-sans">
-          <li><NavLink to="/" className={linkClass}>Home</NavLink></li>
+          <li><NavLink to="/" className={linkClass} onClick={() => sessionStorage.setItem("ff_home_loader_force", "true")}>Home</NavLink></li>
           <li><NavLink to="/about" className={linkClass}>About</NavLink></li>
           {/* Broadband Dropdown */}
           <li className="relative" ref={broadbandRef} style={{ pointerEvents: 'auto' }}>
@@ -241,7 +243,16 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-black/90 text-white px-6 py-4 space-y-4 text-center text-base font-sans">
-          <NavLink to="/" className={linkClass} onClick={() => setIsOpen(false)}>Home</NavLink>
+          <NavLink
+            to="/"
+            className={linkClass}
+            onClick={() => {
+              sessionStorage.setItem("ff_home_loader_force", "true");
+              setIsOpen(false);
+            }}
+          >
+            Home
+          </NavLink>
           <NavLink to="/about" className={linkClass} onClick={() => setIsOpen(false)}>About</NavLink>
           {/* Mobile Broadband Dropdown */}
           <div className="relative">

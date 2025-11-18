@@ -20,6 +20,8 @@ export default function Footer() {
             <Link
               to="/"
               onClick={() => {
+                // force loader when navigating home from footer
+                sessionStorage.setItem("ff_home_loader_force", "true");
                 setTimeout(() => {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }, 50);
