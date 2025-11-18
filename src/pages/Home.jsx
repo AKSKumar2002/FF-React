@@ -36,7 +36,7 @@ export default function Home() {
       const t = setTimeout(() => {
         setShowLoader(false);
         sessionStorage.setItem("ff_home_loader_shown", "true");
-      }, 4000);
+      }, 3000);
       return () => clearTimeout(t);
     }
   }, [location]);
