@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
+import EnquireButton from "./components/EnquireButton";
 
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -22,6 +23,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />   {/* <-- IMPORTANT */}
+      <EnquireButton /> {/* <-- Add this so it's visible on all pages */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
