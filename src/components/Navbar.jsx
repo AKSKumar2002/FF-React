@@ -96,7 +96,7 @@ export default function Navbar() {
 
   // Service list and URLs (replace with your actual URLs if needed)
   const servicesList = [
-    { name: "Internet leased line / ILL", url: "/services/ill" },
+    // { name: "Internet leased line / ILL", url: "/services/ill" },
     { name: "Intranet / P2P", url: "/services/p2p" },
     { name: "Managed Network Services", url: "/services/managed-network" },
     { name: "Business Broadband", url: "/services/business-broadband" },
@@ -151,6 +151,10 @@ export default function Navbar() {
                 ))}
               </div>
             )}
+          </li>
+          {/* NEW: ILL direct link */}
+          <li>
+            <NavLink to="/services/ill" className={linkClass}>Internet leased line / ILL</NavLink>
           </li>
           {/* Services Dropdown (replaces Plans) */}
           <li className="relative" ref={servicesRef} style={{ pointerEvents: 'auto' }}>
@@ -280,6 +284,10 @@ export default function Navbar() {
               </div>
             )}
           </div>
+          {/* NEW: ILL direct link in mobile */}
+          <NavLink to="/services/ill" className={linkClass} onClick={() => setIsOpen(false)}>
+            Internet leased line / ILL
+          </NavLink>
           {/* Mobile Services Dropdown */}
           <div className="relative">
             <button
