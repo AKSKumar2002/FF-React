@@ -21,44 +21,45 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close dropdown when clicking outside
+  // Remove duplicate mobile dropdown outside click handler
+  // Only keep one for mobile menu
   useEffect(() => {
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (
+        isOpen &&
+        !event.target.closest(".mobile-menu-dropdown") &&
+        !event.target.closest(".mobile-menu-btn")
+      ) {
+        setBroadbandDropdown(false);
+        setServicesDropdown(false);
         setLoginDropdown(false);
       }
     }
-    if (loginDropdown) {
+    if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [loginDropdown]);
+  }, [isOpen]);
 
-  // Close broadband dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (broadbandRef.current && !broadbandRef.current.contains(event.target)) {
-        setBroadbandDropdown(false);
-      }
-    }
-    if (broadbandDropdown) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [broadbandDropdown]);
+  // Toggle logic: only one dropdown open at a time, clicking toggles open/close
+  const handleMobileDropdown = (type) => {
+    setBroadbandDropdown(type === "broadband" ? !broadbandDropdown : false);
+    setServicesDropdown(type === "services" ? !servicesDropdown : false);
+    setLoginDropdown(type === "login" ? !loginDropdown : false);
+  };
 
-  // Close services dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (servicesRef.current && !servicesRef.current.contains(event.target)) {
-        setServicesDropdown(false);
-      }
+  // Helper for navigation (use react-router for internal links)
+  const handleNavigate = (url) => {
+    setIsOpen(false);
+    setBroadbandDropdown(false);
+    setServicesDropdown(false);
+    setLoginDropdown(false);
+    if (url.startsWith("http")) {
+      window.location.href = url;
+    } else {
+      navigate(url);
     }
-    if (servicesDropdown) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [servicesDropdown]);
+  };
 
   const goHome = () => {
     // force loader on next mount of Home
@@ -96,7 +97,6 @@ export default function Navbar() {
 
   // Service list and URLs (replace with your actual URLs if needed)
   const servicesList = [
-    // { name: "Internet leased line / ILL", url: "/services/ill" },
     { name: "Intranet / P2P", url: "/services/p2p" },
     { name: "Managed Network Services", url: "/services/managed-network" },
     { name: "Business Broadband", url: "/services/business-broadband" },
@@ -247,7 +247,7 @@ export default function Navbar() {
           <div className="flex flex-col gap-3">
             <NavLink
               to="/"
-              className={linkClass}
+              className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"}
               onClick={() => {
                 sessionStorage.setItem("ff_home_loader_force", "true");
                 setIsOpen(false);
@@ -255,12 +255,18 @@ export default function Navbar() {
             >
               Home
             </NavLink>
-            <NavLink to="/about" className={linkClass} onClick={() => setIsOpen(false)}>About</NavLink>
+            <NavLink
+              to="/about"
+              className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"}
+              onClick={() => setIsOpen(false)}
+            >
+              About
+            </NavLink>
             {/* Mobile Broadband Dropdown */}
-            <div className="relative w-full">
+            <div className="relative w-full mobile-menu-dropdown">
               <button
-                className="w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition flex items-center justify-between"
-                onClick={() => setBroadbandDropdown((prev) => !prev)}
+                className={`mobile-menu-btn w-full text-left px-5 py-2 rounded-lg font-semibold font-sans ${broadbandDropdown ? "bg-red-500 text-white" : "bg-white/10"} hover:bg-red-500 hover:text-white transition flex items-center justify-between`}
+                onClick={() => handleMobileDropdown("broadband")}
               >
                 <span>Broadband</span>
                 <span className="ml-2">{broadbandDropdown ? "▲" : "▼"}</span>
@@ -270,15 +276,11 @@ export default function Navbar() {
                   className="absolute left-0 w-full mt-2 rounded-lg shadow-lg z-[9999] bg-black/95 border border-white/10 py-1 flex flex-col"
                   style={{ pointerEvents: 'auto' }}
                 >
-                  {broadbandCities.map((city, idx) => (
+                  {broadbandCities.map((city) => (
                     <button
                       key={city.url}
                       className="block w-full text-left px-4 py-2 hover:bg-red-500/80 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
-                      onClick={() => {
-                        setBroadbandDropdown(false);
-                        setIsOpen(false);
-                        window.location.href = city.url;
-                      }}
+                      onClick={() => handleNavigate(city.url)}
                     >
                       {city.name}
                     </button>
@@ -291,10 +293,10 @@ export default function Navbar() {
               Internet leased line / ILL
             </NavLink>
             {/* Mobile Services Dropdown */}
-            <div className="relative w-full">
+            <div className="relative w-full mobile-menu-dropdown">
               <button
-                className="w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition flex items-center justify-between"
-                onClick={() => setServicesDropdown((prev) => !prev)}
+                className={`mobile-menu-btn w-full text-left px-5 py-2 rounded-lg font-semibold font-sans ${servicesDropdown ? "bg-red-500 text-white" : "bg-white/10"} hover:bg-red-500 hover:text-white transition flex items-center justify-between`}
+                onClick={() => handleMobileDropdown("services")}
               >
                 <span>Services</span>
                 <span className="ml-2">{servicesDropdown ? "▲" : "▼"}</span>
@@ -304,15 +306,11 @@ export default function Navbar() {
                   className="absolute left-0 w-full mt-2 rounded-lg shadow-lg z-[9999] bg-black/95 border border-white/10 py-1 flex flex-col"
                   style={{ pointerEvents: 'auto' }}
                 >
-                  {servicesList.map((service, idx) => (
+                  {servicesList.map((service) => (
                     <button
                       key={service.url}
                       className="block w-full text-left px-4 py-2 hover:bg-red-500/80 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
-                      onClick={() => {
-                        setServicesDropdown(false);
-                        setIsOpen(false);
-                        window.location.href = service.url;
-                      }}
+                      onClick={() => handleNavigate(service.url)}
                     >
                       {service.name}
                     </button>
@@ -324,10 +322,10 @@ export default function Navbar() {
             <NavLink to="/complaints" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>Complaints</NavLink>
             <NavLink to="/reviews" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>Review</NavLink>
             {/* Mobile Login Dropdown */}
-            <div className="relative w-full">
+            <div className="relative w-full mobile-menu-dropdown">
               <button
-                className="bg-white text-black px-5 py-2 rounded-lg font-semibold font-sans hover:bg-red-500 hover:text-white transition w-full"
-                onClick={() => setLoginDropdown((prev) => !prev)}
+                className={`mobile-menu-btn bg-white text-black px-5 py-2 rounded-lg font-semibold font-sans ${loginDropdown ? "bg-red-500 text-white" : ""} hover:bg-red-500 hover:text-white transition w-full`}
+                onClick={() => handleMobileDropdown("login")}
               >
                 Login
               </button>
@@ -335,19 +333,13 @@ export default function Navbar() {
                 <div className="absolute left-0 w-full mt-2 rounded-lg shadow-lg z-[9999] bg-black/95 border border-white/10 flex flex-col">
                   <button
                     className="block w-full text-left px-4 py-3 hover:bg-red-500/80 text-white font-medium border-b border-white/10"
-                    onClick={() => {
-                      setLoginDropdown(false);
-                      window.location.href = userLoginUrl;
-                    }}
+                    onClick={() => handleNavigate(userLoginUrl)}
                   >
                     User Login
                   </button>
                   <button
                     className="block w-full text-left px-4 py-3 hover:bg-red-500/80 text-white font-medium"
-                    onClick={() => {
-                      setLoginDropdown(false);
-                      window.location.href = partnerLoginUrl;
-                    }}
+                    onClick={() => handleNavigate(partnerLoginUrl)}
                   >
                     Partner Login
                   </button>
