@@ -244,115 +244,116 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-black/90 text-white px-6 py-4 space-y-4 text-center text-base font-sans">
-          <NavLink
-            to="/"
-            className={linkClass}
-            onClick={() => {
-              sessionStorage.setItem("ff_home_loader_force", "true");
-              setIsOpen(false);
-            }}
-          >
-            Home
-          </NavLink>
-          <NavLink to="/about" className={linkClass} onClick={() => setIsOpen(false)}>About</NavLink>
-          {/* Mobile Broadband Dropdown */}
-          <div className="relative">
-            <button
-              className="w-full text-left px-5 py-2 rounded-full font-semibold font-sans hover:bg-red-500 hover:text-white transition"
-              onClick={() => setBroadbandDropdown((prev) => !prev)}
+          <div className="flex flex-col gap-3">
+            <NavLink
+              to="/"
+              className={linkClass}
+              onClick={() => {
+                sessionStorage.setItem("ff_home_loader_force", "true");
+                setIsOpen(false);
+              }}
             >
-              Broadband
-            </button>
-            {broadbandDropdown && (
-              <div
-                className={`absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-[9999] backdrop-blur-lg min-w-max w-auto py-1 ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}
-                style={{ pointerEvents: 'auto' }}
+              Home
+            </NavLink>
+            <NavLink to="/about" className={linkClass} onClick={() => setIsOpen(false)}>About</NavLink>
+            {/* Mobile Broadband Dropdown */}
+            <div className="relative w-full">
+              <button
+                className="w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition flex items-center justify-between"
+                onClick={() => setBroadbandDropdown((prev) => !prev)}
               >
-                {broadbandCities.map((city, idx) => (
+                <span>Broadband</span>
+                <span className="ml-2">{broadbandDropdown ? "▲" : "▼"}</span>
+              </button>
+              {broadbandDropdown && (
+                <div
+                  className="absolute left-0 w-full mt-2 rounded-lg shadow-lg z-[9999] bg-black/95 border border-white/10 py-1 flex flex-col"
+                  style={{ pointerEvents: 'auto' }}
+                >
+                  {broadbandCities.map((city, idx) => (
+                    <button
+                      key={city.url}
+                      className="block w-full text-left px-4 py-2 hover:bg-red-500/80 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                      onClick={() => {
+                        setBroadbandDropdown(false);
+                        setIsOpen(false);
+                        window.location.href = city.url;
+                      }}
+                    >
+                      {city.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            {/* NEW: ILL direct link in mobile */}
+            <NavLink to="/services/ill" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>
+              Internet leased line / ILL
+            </NavLink>
+            {/* Mobile Services Dropdown */}
+            <div className="relative w-full">
+              <button
+                className="w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition flex items-center justify-between"
+                onClick={() => setServicesDropdown((prev) => !prev)}
+              >
+                <span>Services</span>
+                <span className="ml-2">{servicesDropdown ? "▲" : "▼"}</span>
+              </button>
+              {servicesDropdown && (
+                <div
+                  className="absolute left-0 w-full mt-2 rounded-lg shadow-lg z-[9999] bg-black/95 border border-white/10 py-1 flex flex-col"
+                  style={{ pointerEvents: 'auto' }}
+                >
+                  {servicesList.map((service, idx) => (
+                    <button
+                      key={service.url}
+                      className="block w-full text-left px-4 py-2 hover:bg-red-500/80 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                      onClick={() => {
+                        setServicesDropdown(false);
+                        setIsOpen(false);
+                        window.location.href = service.url;
+                      }}
+                    >
+                      {service.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <NavLink to="/contact" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>Contact</NavLink>
+            <NavLink to="/complaints" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>Complaints</NavLink>
+            <NavLink to="/reviews" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>Review</NavLink>
+            {/* Mobile Login Dropdown */}
+            <div className="relative w-full">
+              <button
+                className="bg-white text-black px-5 py-2 rounded-lg font-semibold font-sans hover:bg-red-500 hover:text-white transition w-full"
+                onClick={() => setLoginDropdown((prev) => !prev)}
+              >
+                Login
+              </button>
+              {loginDropdown && (
+                <div className="absolute left-0 w-full mt-2 rounded-lg shadow-lg z-[9999] bg-black/95 border border-white/10 flex flex-col">
                   <button
-                    key={city.url}
-                    className="block w-full text-left px-4 py-2 hover:bg-red-100/20 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                    className="block w-full text-left px-4 py-3 hover:bg-red-500/80 text-white font-medium border-b border-white/10"
                     onClick={() => {
-                      setBroadbandDropdown(false);
-                      setIsOpen(false);
-                      window.location.href = city.url;
+                      setLoginDropdown(false);
+                      window.location.href = userLoginUrl;
                     }}
                   >
-                    {city.name}
+                    User Login
                   </button>
-                ))}
-              </div>
-            )}
-          </div>
-          {/* NEW: ILL direct link in mobile */}
-          <NavLink to="/services/ill" className={linkClass} onClick={() => setIsOpen(false)}>
-            Internet leased line / ILL
-          </NavLink>
-          {/* Mobile Services Dropdown */}
-          <div className="relative">
-            <button
-              className="w-full text-left px-5 py-2 rounded-full font-semibold font-sans hover:bg-red-500 hover:text-white transition"
-              onClick={() => setServicesDropdown((prev) => !prev)}
-            >
-              Services
-            </button>
-            {servicesDropdown && (
-              <div
-                className={`absolute left-1/2 -translate-x-1/2 mt-2 rounded-lg shadow-lg z-[9999] backdrop-blur-lg min-w-max w-auto py-1 ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}
-                style={{ pointerEvents: 'auto' }}
-              >
-                {servicesList.map((service, idx) => (
                   <button
-                    key={service.url}
-                    className="block w-full text-left px-4 py-2 hover:bg-red-100/20 text-white font-medium border-b border-white/10 last:border-b-0 whitespace-nowrap"
+                    className="block w-full text-left px-4 py-3 hover:bg-red-500/80 text-white font-medium"
                     onClick={() => {
-                      setServicesDropdown(false);
-                      setIsOpen(false);
-                      window.location.href = service.url;
+                      setLoginDropdown(false);
+                      window.location.href = partnerLoginUrl;
                     }}
                   >
-                    {service.name}
+                    Partner Login
                   </button>
-                ))}
-              </div>
-            )}
-          </div>
-          <NavLink to="/contact" className={linkClass} onClick={() => setIsOpen(false)}>Contact</NavLink>
-          <NavLink to="/complaints" className={linkClass} onClick={() => setIsOpen(false)}>Complaints</NavLink>
-          <NavLink to="/reviews" className={linkClass} onClick={() => setIsOpen(false)}>Review</NavLink>
-
-          {/* Mobile Login Dropdown */}
-          <div className="relative">
-            <button
-              className="bg-white text-black px-5 py-2 rounded-full font-semibold font-sans hover:bg-red-500 hover:text-white transition w-full"
-              onClick={() => setLoginDropdown((prev) => !prev)}
-            >
-              Login
-            </button>
-            {loginDropdown && (
-              <div className={`absolute left-1/2 -translate-x-1/2 mt-2 w-48 rounded-lg shadow-lg z-[9999] backdrop-blur-lg ${scrolled ? "bg-black/80 border-white/10" : "bg-white/10 border-white/20"}`}>
-                <button
-                  className="block w-full text-left px-4 py-3 hover:bg-red-100/20 text-black font-medium border-b border-white/10"
-                  style={{ color: "#fff" }}
-                  onClick={() => {
-                    setLoginDropdown(false);
-                    window.location.href = userLoginUrl;
-                  }}
-                >
-                  User Login
-                </button>
-                <button
-                  className="block w-full text-left px-4 py-3 hover:bg-red-100/20 text-black font-medium"
-                  style={{ color: "#fff" }}
-                  onClick={() => {
-                    setLoginDropdown(false);
-                    window.location.href = partnerLoginUrl;
-                  }}
-                >
-                  Partner Login
-                </button>
-              </div>
-            )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

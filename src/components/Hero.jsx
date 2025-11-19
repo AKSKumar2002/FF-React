@@ -127,6 +127,7 @@ export default function Hero({ useVideoBg = true }) {
             loop
             muted
             playsInline
+            preload="auto"
           />
         ) : (
           <img
