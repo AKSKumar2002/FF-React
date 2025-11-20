@@ -150,15 +150,12 @@ export default function EnquireButton() {
                       <div>
                         <TextInput name="address" placeholder="Address" />
                       </div>
-                      <div className="col-span-2">
+                      <div>
                         <textarea
-                          name="extra"
-                          placeholder="Additional Information"
-                          className="input-field h-24"
+                          name="query"
+                          placeholder="Query"
+                          className="input-field h-16"
                         />
-                      </div>
-                      <div className="captcha-box">
-                        <div className="recaptcha-placeholder">reCAPTCHA placeholder</div>
                       </div>
                       <div className="submit-col">
                         <button className="submit-btn">Submit</button>
@@ -190,15 +187,12 @@ export default function EnquireButton() {
                       <div>
                         <TextInput name="baddress" placeholder="Address" />
                       </div>
-                      <div className="col-span-2">
+                      <div>
                         <textarea
-                          name="bextra"
-                          placeholder="Additional Information"
-                          className="input-field h-24"
+                          name="bquery"
+                          placeholder="Query"
+                          className="input-field h-16"
                         />
-                      </div>
-                      <div className="captcha-box">
-                        <div className="recaptcha-placeholder">reCAPTCHA placeholder</div>
                       </div>
                       <div className="submit-col">
                         <button className="submit-btn">Submit</button>

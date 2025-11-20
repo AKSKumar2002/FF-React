@@ -1,33 +1,34 @@
-/* soften background to mingle with site theme (slightly lighter than pure black) */
+/* soften background to mingle with site theme */
 .contact-section {
   margin-top: -4rem;
   padding-top: 5.5rem;
   padding-bottom: 4rem;
-  background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.45));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.45));
 }
 
-/* Tabs - subtle frosty look and theme accent */
+/* Tabs - subtle frosty look */
 .tabs-wrapper .tab {
   padding: 0.65rem 2.2rem;
   border-radius: 10px;
   font-weight: 700;
   letter-spacing: 1.8px;
   margin: 0 0.4rem;
-  color: rgba(255,255,255,0.9);
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.04);
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.04);
   transition: all .22s;
   cursor: pointer;
   backdrop-filter: blur(4px) saturate(1.15);
 }
+
 .tabs-wrapper .tab.active {
-  background: linear-gradient(90deg, rgba(245,70,70,0.95), rgba(255,85,85,0.95));
+  background: linear-gradient(90deg, rgba(245, 70, 70, 0.95), rgba(255, 85, 85, 0.95));
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255,80,80,0.14);
+  box-shadow: 0 8px 24px rgba(255, 80, 80, 0.14);
 }
 
-/* Scope flip card to avoid collisions with other elements */
+/* Scope flip card */
 .hero-form-wrapper {
   perspective: 1100px;
   display: flex;
@@ -35,21 +36,20 @@
   align-items: center;
 }
 
-/* card dimensions and main transform */
+/* card dimensions and transform */
 .hero-flip-card {
   width: 100%;
   max-width: 990px;
   min-height: 360px;
-  transition: transform 0.8s cubic-bezier(.26,.98,.4,.95);
+  transition: transform 0.8s cubic-bezier(.26, .98, .4, .95);
   transform-style: preserve-3d;
   will-change: transform;
   position: relative;
+  perspective: 1000px;
 }
 
-/* Only flip the small hero-flip-card so other elements won't get transformed */
 .hero-flip-card.is-flipped {
   transform: rotateY(180deg);
-  /* optional tilt for a cooler effect */
   transform-origin: center;
 }
 
@@ -59,96 +59,111 @@
   inset: 0;
   padding: 1.25rem;
   border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(2,6,23,0.45);
+  box-shadow: 0 12px 40px rgba(2, 6, 23, 0.45);
   transform-style: preserve-3d;
-  backface-visibility: hidden; /* prevents mirrored text */
+  backface-visibility: hidden;
 }
 
-/* frosty glass front - light translucency for good contrast */
 .hero-card-front {
-  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.06));
-  border: 1px solid rgba(255,255,255,0.06);
-  color: #f8fafc; /* ensure text stands out on slightly dark background */
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #f8fafc;
   backdrop-filter: blur(10px) saturate(110%);
+  border-radius: 10px;
 }
 
-/* frosty glass back - darker but still translucent for white text */
 .hero-card-back {
-  background: linear-gradient(180deg, rgba(6,6,6,0.45), rgba(10,10,10,0.28));
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, rgba(6, 6, 6, 0.45), rgba(10, 10, 10, 0.28));
+  border: 1px solid rgba(255, 255, 255, 0.06);
   color: #fff;
   transform: rotateY(180deg);
   backdrop-filter: blur(12px) saturate(120%);
+  border-radius: 10px;
 }
 
-/* Grid and spacing: keep responsive */
+/* Grid and spacing */
 .grid-forms {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.95rem;
   align-items: center;
 }
+
 .grid-forms .col-span-2 {
   grid-column: span 2 / span 2;
 }
+
 @media (max-width: 900px) {
   .grid-forms {
     grid-template-columns: 1fr;
   }
+
   .grid-forms .col-span-2 {
     grid-column: auto;
   }
 }
 
-/* Input field styling - frosty */
+/* Input field styling */
 .input-field {
   width: 100%;
   padding: 0.9rem 1rem;
   border-radius: 9px;
-  border: 1px solid rgba(255,255,255,0.06);
-  background: rgba(255,255,255,0.02); /* near-transparent so blurred background shows */
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.02);
   color: #f8fafc;
   outline: none;
   transition: transform .15s ease, box-shadow .15s ease;
   font-size: 0.98rem;
 }
+
 .hero-card-front .input-field {
-  background: rgba(255,255,255,0.02);
+  background: rgba(255, 255, 255, 0.02);
   color: #ffffff;
-}
-.hero-card-back .input-field {
-  background: rgba(255,255,255,0.03);
-  color: #ffffff;
-}
-.input-field::placeholder {
-  color: rgba(255,255,255,0.56);
-}
-.input-field:focus {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 32px rgba(0,0,0,0.35);
 }
 
-/* recaptcha & submit styling */
+.hero-card-back .input-field {
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.56);
+}
+
+.input-field:focus {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* Textarea */
+.input-field.h-16 {
+  min-height: 4rem;
+}
+
+/* Submit styling */
 .captcha-box {
   display: flex;
   align-items: center;
 }
+
 .recaptcha-placeholder {
   width: 220px;
   height: 54px;
   border-radius: 8px;
-  border: 1px dashed rgba(255,255,255,0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.04);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(255,255,255,0.7);
-  background: rgba(255,255,255,0.02);
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.02);
 }
+
 .submit-col {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .submit-btn {
   width: 100%;
   padding: .85rem 1.3rem;
@@ -160,17 +175,21 @@
   cursor: pointer;
   transition: transform .15s ease, box-shadow .15s ease;
 }
+
 .submit-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 16px 36px rgba(239,68,68,0.16);
+  box-shadow: 0 16px 36px rgba(239, 68, 68, 0.16);
 }
-.submit-col .submit-btn { max-width: 240px; }
 
-/* Accessibility state visuals */
+.submit-col .submit-btn {
+  max-width: 240px;
+}
+
+/* Accessibility */
 .tab:focus,
 .input-field:focus,
 .submit-btn:focus {
-  outline: 3px solid rgba(255,80,80,0.18);
+  outline: 3px solid rgba(255, 80, 80, 0.18);
   outline-offset: 2px;
 }
 
@@ -179,47 +198,57 @@
   position: fixed;
   right: 22px;
   bottom: 22px;
-  z-index: 9999; /* was 60, now much higher */
+  z-index: 9999;
   display: inline-flex;
   gap: 10px;
   align-items: center;
   padding: 14px 16px;
-  background: linear-gradient(135deg, rgba(255,40,40,0.95), rgba(255,80,60,0.96));
+  background: linear-gradient(135deg, rgba(255, 40, 40, 0.95), rgba(255, 80, 60, 0.96));
   color: #fff;
   border-radius: 999px;
-  box-shadow: 0 12px 40px rgba(12,12,20,0.5);
-  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 12px 40px rgba(12, 12, 20, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: pointer;
   font-weight: 700;
   transition: transform .15s ease, box-shadow .18s ease;
 }
-.enquire-button:hover { transform: translateY(-4px); box-shadow: 0 18px 46px rgba(12,12,20,0.64); }
-.enq-icon { font-size: 18px; }
-.enq-label { display: inline-block; }
 
-/* The layer and overlay */
-.enquire-layer { 
-  position: fixed; 
-  inset: 0; 
-  z-index: 9998; /* was 70, now much higher */
-  display: block; 
+.enquire-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 46px rgba(12, 12, 20, 0.64);
 }
+
+.enq-icon {
+  font-size: 18px;
+}
+
+.enq-label {
+  display: inline-block;
+}
+
+/* Layer and overlay */
+.enquire-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  display: block;
+}
+
 .enquire-overlay {
   position: absolute;
   inset: 0;
   backdrop-filter: blur(7px) saturate(120%);
-  background: linear-gradient(180deg, rgba(10,10,10,0.35), rgba(10,10,10,0.6));
+  background: linear-gradient(180deg, rgba(10, 10, 10, 0.35), rgba(10, 10, 10, 0.6));
 }
-/* To make the popup come out of the button we set CSS vars --fromX and --fromY
-   by JS (popupRef.current.style.setProperty('--fromX', '...px')).
-   Animation uses these variables. */
+
+/* Popup with animation */
 .enquire-popup {
   --fromX: 0px;
   --fromY: 0px;
   position: fixed;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(1); /* final transform state */
+  transform: translate(-50%, -50%) scale(1);
   width: min(940px, calc(100vw - 40px));
   max-width: 94%;
   border-radius: 14px;
@@ -228,50 +257,52 @@
   align-items: center;
   justify-content: center;
   z-index: 72;
-  box-shadow: 0 18px 80px rgba(2,6,23,0.75);
-  border: 1px solid rgba(255,255,255,0.06);
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 18px 80px rgba(2, 6, 23, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
   backdrop-filter: blur(14px) saturate(120%);
   opacity: 0;
   transform-origin: center center;
   transition: opacity .28s ease, transform .28s ease;
 }
 
-/* entry animation: translate from button center (var) to center and scale */
 .enquire-popup.open {
-  animation: popIn 380ms cubic-bezier(.2,.9,.3,1) both;
+  animation: popIn 380ms cubic-bezier(.2, .9, .3, 1) both;
 }
+
 @keyframes popIn {
   0% {
     opacity: 0;
     transform: translate(calc(var(--fromX) * 1), calc(var(--fromY) * 1)) scale(.08) rotateX(8deg);
   }
+
   60% {
     transform: translate(-50%, -50%) scale(1.03);
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
 }
 
-/* close animation */
 .enquire-popup.closing {
-  animation: popOut .32s cubic-bezier(.3,.96,.5,1) both;
+  animation: popOut .32s cubic-bezier(.3, .96, .5, 1) both;
 }
+
 @keyframes popOut {
   0% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
+
   100% {
     opacity: 0;
     transform: translate(calc(var(--fromX) * 1), calc(var(--fromY) * 1)) scale(.08);
   }
 }
 
-/* popup close button */
 .popup-close {
   position: absolute;
   right: 10px;
@@ -279,11 +310,11 @@
   background: transparent;
   border: none;
   font-size: 22px;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   cursor: pointer;
 }
 
-/* inner layout */
+/* Inner layout */
 .enquire-inner {
   display: grid;
   grid-template-columns: 1fr 220px;
@@ -291,23 +322,23 @@
   width: 100%;
   align-items: stretch;
 }
-/* left form area */
+
 .enquire-left {
   min-height: 400px;
   padding: 14px;
 }
 
-/* right whatsapp area - frosty button */
 .enquire-right {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .whatsapp-cta {
   width: 180px;
   height: 180px;
   border-radius: 14px;
-  background: linear-gradient(180deg, rgba(37,211,102,0.1), rgba(37,211,102,0.06));
+  background: linear-gradient(180deg, rgba(37, 211, 102, 0.1), rgba(37, 211, 102, 0.06));
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -316,75 +347,208 @@
   padding: 12px;
   text-decoration: none;
   color: #fff;
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 10px 26px rgba(2,10,6,0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 26px rgba(2, 10, 6, 0.45);
   transition: transform .18s;
 }
-.whatsapp-cta:hover { transform: translateY(-4px); }
-.wh-text { font-weight: 700; color: #fff; margin-top: 6px; font-size: 14px; }
 
-/* mobile adjustments */
-@media (max-width: 880px) {
-  .enquire-inner { grid-template-columns: 1fr; }
-  .enquire-right { padding-top: 10px; justify-content: flex-start; }
-  .whatsapp-cta { width: 64px; height: 64px; border-radius: 999px;  }
+.whatsapp-cta:hover {
+  transform: translateY(-4px);
 }
 
-/* POPUP TABS — scoped to the enquire-left panel */
+.wh-text {
+  font-weight: 700;
+  color: #fff;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+/* Popup tabs */
 .enquire-left .popup-tabs {
   display: flex;
   gap: 10px;
   justify-content: center;
   margin-bottom: 12px;
 }
+
 .enquire-left .popup-tabs .tab {
   padding: 10px 18px;
   border-radius: 999px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
-  color: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
   transition: transform .18s, box-shadow .18s, background .18s;
   backdrop-filter: blur(6px) saturate(1);
 }
+
 .enquire-left .popup-tabs .tab:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
+
 .enquire-left .popup-tabs .tab.active {
-  background: linear-gradient(90deg, rgba(245,70,70,0.95), rgba(255,85,85,0.95));
+  background: linear-gradient(90deg, rgba(245, 70, 70, 0.95), rgba(255, 85, 85, 0.95));
   color: white;
   transform: translateY(-4px);
-  box-shadow: 0 12px 36px rgba(255,80,80,0.14);
+  box-shadow: 0 12px 36px rgba(255, 80, 80, 0.14);
 }
 
-/* Ensure the flip only affects the small left card */
-.hero-flip-card {
-  /* ...existing hero-flip-card styles ... */
-  /* ensure only left area flips — scoped and preserve-3d */
-  perspective: 1000px;
-  will-change: transform;
-}
-.hero-flip-card.is-flipped {
-  transform: rotateY(180deg);
-}
-
-/* Ensure faces hide back when flipped */
-.hero-flip-face {
-  backface-visibility: hidden;
-}
-
-/* change color contrast for left front/back forms to match popup glass */
-.hero-card-front, .hero-card-back {
-  border-radius: 10px;
-}
-
-/* ensure focus states visible for accessibility */
 .enquire-left .tab:focus,
 .enquire-left .tab:active,
 .enquire-left .input-field:focus {
-  outline: 3px solid rgba(255,80,80,0.14);
+  outline: 3px solid rgba(255, 80, 80, 0.14);
   outline-offset: 2px;
+}
+
+/* Tablet adjustments */
+@media (max-width: 880px) {
+  .enquire-inner {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .enquire-left {
+    min-height: auto;
+  }
+
+  .enquire-right {
+    padding: 12px 0 0 0;
+  }
+
+  .whatsapp-cta {
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .whatsapp-cta svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .wh-text {
+    margin-top: 0;
+    font-size: 14px;
+  }
+}
+
+/* Mobile - SUPER COMPACT */
+@media (max-width: 600px) {
+  .enquire-popup {
+    width: calc(100vw - 20px);
+    padding: 10px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+  }
+
+  .enquire-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .enquire-left {
+    padding: 0;
+    min-height: auto;
+  }
+
+  .enquire-right {
+    padding: 0;
+    width: 100%;
+  }
+
+  .whatsapp-cta {
+    width: 100%;
+    height: 48px;
+    flex-direction: row;
+    gap: 8px;
+    border-radius: 8px;
+  }
+
+  .whatsapp-cta svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .wh-text {
+    font-size: 13px;
+    margin-top: 0;
+  }
+
+  .popup-close {
+    right: 8px;
+    top: 8px;
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    color: #fff;
+  }
+
+  .enquire-left .popup-tabs {
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .enquire-left .popup-tabs .tab {
+    padding: 9px 16px;
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    flex: 1;
+  }
+
+  .hero-flip-card {
+    min-height: 420px;
+    max-height: 420px;
+  }
+
+  .hero-flip-face {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .grid-forms {
+    gap: 8px;
+    width: 100%;
+  }
+
+  .input-field {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-radius: 7px;
+  }
+
+  .input-field.h-16 {
+    min-height: 55px;
+    max-height: 55px;
+    resize: none;
+  }
+
+  .submit-btn {
+    padding: 11px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 8px;
+  }
+
+  .submit-col .submit-btn {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  select.input-field {
+    padding: 10px 12px;
+  }
 }
