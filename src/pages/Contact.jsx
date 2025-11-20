@@ -5,7 +5,7 @@ import { MapPin, Phone, Mail, Send } from "lucide-react";
 
 export default function Contact() {
   const [selectedType, setSelectedType] = useState("Contact");
-  const types = ["Contact", "Complaint", "Review"];
+  const types = ["Contact us", "Complaint"]; // ,"Review"
 
   return (
     <div className="font-sans">

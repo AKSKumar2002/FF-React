@@ -121,6 +121,10 @@ export default function Navbar() {
         <ul className="hidden md:flex space-x-8 text-base font-semibold text-white font-sans">
           <li><NavLink to="/" className={linkClass} onClick={() => sessionStorage.setItem("ff_home_loader_force", "true")}>Home</NavLink></li>
           <li><NavLink to="/about" className={linkClass}>About</NavLink></li>
+          {/* NEW: ILL direct link */}
+          <li>
+            <NavLink to="/services/ill" className={linkClass}>Internet leased line / ILL</NavLink>
+          </li>
           {/* Broadband Dropdown */}
           <li className="relative" ref={broadbandRef} style={{ pointerEvents: 'auto' }}>
             <button
@@ -151,10 +155,6 @@ export default function Navbar() {
                 ))}
               </div>
             )}
-          </li>
-          {/* NEW: ILL direct link */}
-          <li>
-            <NavLink to="/services/ill" className={linkClass}>Internet leased line / ILL</NavLink>
           </li>
           {/* Services Dropdown (replaces Plans) */}
           <li className="relative" ref={servicesRef} style={{ pointerEvents: 'auto' }}>
@@ -262,6 +262,10 @@ export default function Navbar() {
             >
               About
             </NavLink>
+            {/* NEW: ILL direct link in mobile */}
+            <NavLink to="/services/ill" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>
+              Internet leased line / ILL
+            </NavLink>
             {/* Mobile Broadband Dropdown */}
             <div className="relative w-full mobile-menu-dropdown">
               <button
@@ -288,10 +292,6 @@ export default function Navbar() {
                 </div>
               )}
             </div>
-            {/* NEW: ILL direct link in mobile */}
-            <NavLink to="/services/ill" className={linkClass + " w-full text-left px-5 py-2 rounded-lg font-semibold font-sans bg-white/10 hover:bg-red-500 hover:text-white transition"} onClick={() => setIsOpen(false)}>
-              Internet leased line / ILL
-            </NavLink>
             {/* Mobile Services Dropdown */}
             <div className="relative w-full mobile-menu-dropdown">
               <button

@@ -82,7 +82,7 @@ export default function Footer() {
               {[
                 { to: "/contact", label: "Contact Us" },
                 { to: "/complaints", label: "Complaints" },
-                { to: "/review", label: "Review" }
+                // { to: "/review", label: "Review" }
               ].map((link, idx) => (
                 <li key={idx}>
                   <Link
